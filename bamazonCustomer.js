@@ -21,7 +21,7 @@ function loadProducts() {
   connection.query(" SELECT * FROM products", function (err, res) {
     if (err) throw err;
     //console.table gives you the table of results in the terminal
-    console.table(results);
+    console.table(res);
     //This promts the user for their choice and passes them through promptCustomerForItem(res)
     promptCustomerForItem(res);
   });
