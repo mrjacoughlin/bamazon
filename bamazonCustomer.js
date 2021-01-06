@@ -74,7 +74,7 @@ function promtCustomerForQuantity(product) {
       checkIfShouldExit(val.quantity);
       var quantity = parseInt(val.quantity);
       if (quantity > product.stock_quantity) {
-        console.log("Insufficient quantity!");
+        console.log("/nInsufficient quantity!");
         loadProducts();
       } else {
         makePurchase(product, quantity);
@@ -85,53 +85,17 @@ function promtCustomerForQuantity(product) {
 // If there is insufficient product inform user and loadproducts,
 // If that is not the case then makePurchase with product info and quantity.
 
-//   inquirer
-//     .prompt([
-//       {
-//         name: "choice",
-//         type: "rawlist",
-//         choices: function () {
-//           var choiceArray = [];
-//           for (var i = 0; i < results.length; i++) {
-//             choiceArray.push(results[i].product_name);
-//           }
-//           return choiceArray;
-//         },
-//         message: " What item would you like to buy",
-//       },
-//       {
-//         name: "units",
-//         type: "input",
-//         message: "How many units would you like to buy",
-//       },
-//     ])
-//     .then(function (answer) {
-//       var chosenItem;
-//       for (var i = 0; i < results.length; i++) {
-//         if (results[i].product_name === answer.choice) {
-//           chosenItem = results[i];
-//         }
-//       }
-//       if (chosenItem.stock_quantity < parseInt(answer.unit)) {
-//         connection.query(
-//           "UPDATE products SET ? WHERE ?",
-//           [
-//             {
-//               stock_quantity: answer.units,
-//             },
-//             {
-//               item_id: chosenItem.item_id,
-//             },
-//           ],
-//           function (err) {
-//             if (err) throw err;
-//             console.log("Your Purchase was Succesful");
-//             start();
-//           }
-//         );
-//       } else {
-//         console.log("Not enough units availible. Try a different amount");
-//         start();
-//       }
-//     });
-// });
+function makePurchase(product, quantity) {
+  connection.query(
+    "UPDATE products SET stock_quantity = stock_quantity - ?, product_sales = product_sales + ? WHERE item_id = ?",
+    [quantity, product.price * quantity, product.item_id],
+    function (err, res) {
+      console.log(
+        "/nSuccessfull Purchase" + quantity + " " + product.product_name + "'s!"
+      );
+      loadProducts();
+    }
+  );
+}
+// This function allows the user to buy the desired quantity,
+// Then lets the user know if the purchase was successfull and updates the database.
