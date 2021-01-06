@@ -26,6 +26,38 @@ function loadProducts() {
     promptCustomerForItem(res);
   });
 }
+// Next we will be promting the customer for an item id,
+// .Then checking to see if the inventory is instock.
+
+function promptCustomerForItem(inventory) {
+  inquirer
+    .prompt([
+      {
+        type: "input",
+        name: "choice",
+        message:
+          "What is the Item ID you would like to Purchase? [Quit with Q]",
+        validate: function (val) {
+          return !isNaN(val) || val.toLowerCase() === "q";
+        },
+      },
+    ])
+    .then(function (val) {
+      checkIfShouldExit(val.choice);
+      var choiceId = parseInt(val.choice);
+      var product = checkInventory(choiceId, inventory);
+      if (product) {
+        promtCustomerForQuantity(product);
+      } else {
+        console.log("/nThat item is not currently in stock");
+        loadProducts();
+      }
+    });
+}
+// The above code asks the user what item by id they would like to select,
+// if the item is instock, we then ask the user for the quantity,
+// if not in stock then load the product inventory.
+
 //   inquirer
 //     .prompt([
 //       {
