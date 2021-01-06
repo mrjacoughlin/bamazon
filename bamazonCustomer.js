@@ -110,3 +110,11 @@ function checkInventory(choiceId, inventory) {
 }
 //This function will check to see if the product is within the inventory,
 // if found return Inventory
+
+function checkIfShouldExit(choice) {
+  if (choice.toLowerCase() === "q") {
+    console.log("Thank you For Shopping, GoodBye");
+    process.exit(0);
+  }
+}
+// Function to see if the user would like to exit the program
