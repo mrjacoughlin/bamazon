@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bamazon Customer</title>
+  </head>
+  <body>
+    <div class="container">
+      <div class="row">
+        <button id="btnGetProducts" type="button" class="btn btn-success">
+          Get Products
+        </button>
+      </div>
+
+      <div class="row">
+        <table id="table" class="table table-stripped">
+          <thread>
+            <tr>
+              <th>Item Id</th>
+              <th>Product Name</th>
+              <th>Product Sales</th>
+              <th>Department Name</th>
+              <th>Price</th>
+              <th>Stock Quantity</th>
+              <th>Action</th>
+            </tr>
+          </thread>
+
+          <tbody></tbody>
+        </table>
+      </div>
+
+      <div
+        class="modal fade"
+        id="modal"
+        tabindex="-1"
+        role="dialog"
+        aria-labelledby="exampleModalCenterTitle"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLongTitle">Purchase</h5>
+              <button
+                type="button"
+                class="close"
+                data-dismiss="modal"
+                aria-modal="Close"
+              >
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <div class="row">
+                <div class="col-6">
+                  <label>How many items would you like to purchase?</label>
+                </div>
+                <div class="col-3">
+                  <input type="number" id="purchaseNumber" />
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-dismiss="modal"
+              >
+                Close
+              </button>
+              <button id="btnSubmit" type="button" class="btn btn-primary">
+                Submit
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+      let selectedId = null;
+
+      $(document).ready(() => {
+        $("#btnGetProducts").click(() => {
+          // add code for products ajax request
+        });
+        $("#btnSubmit").click(() => {
+          //add code for purchase ajax request
+
+          $("#modal").modal("hide");
+          selectedId = null;
+        });
+      });
+
+      function generateTable(data = []) {
+        $("#table tbody").empty();
+
+        data.forEach((d) => {
+          const tableBody = `
+                <tr>
+                    <td>${d.item_id}</td>
+                    <td>${d.product_name}</td>
+                    <td>${d.product_sales}</td>
+                    <td>${d.department_name}</td>
+                    <td>${d.price}</td>
+                    <td>${d.stock_quantity}</td>
+                </tr>
+                `;
+
+          $("#table tbody").append(tableBody);
+        });
+      }
+      function openModal(id) {
+        selectedId = id;
+        $("#modal").modal("show");
+      }
+    </script>
+  </body>
+</html>
