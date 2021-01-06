@@ -27,7 +27,7 @@ function loadProducts() {
   });
 }
 // Next we will be promting the customer for an item id,
-// .Then checking to see if the inventory is instock.
+// .then checking to see if the inventory is instock.
 
 function promptCustomerForItem(inventory) {
   inquirer
@@ -55,8 +55,35 @@ function promptCustomerForItem(inventory) {
     });
 }
 // The above code asks the user what item by id they would like to select,
-// if the item is instock, we then ask the user for the quantity,
+// if the item is instock, we then prompt the user for the quantity,
 // if not in stock then load the product inventory.
+
+function promtCustomerForQuantity(product) {
+  inquirer
+    .prompt([
+      {
+        type: "input",
+        name: "quantity",
+        message: "How many would you Like to Purchase[Quit with Q]",
+        validate: function (val) {
+          return val > 0 || val.toLowerCase() === "q";
+        },
+      },
+    ])
+    .then(function (val) {
+      checkIfShouldExit(val.quantity);
+      var quantity = parseInt(val.quantity);
+      if (quantity > product.stock_quantity) {
+        console.log("Insufficient quantity!");
+        loadProducts();
+      } else {
+        makePurchase(product, quantity);
+      }
+    });
+}
+// First we check to see if the user would like to quit,
+// If there is insufficient product inform user and loadproducts,
+// If that is not the case then makePurchase with product info and quantity.
 
 //   inquirer
 //     .prompt([
