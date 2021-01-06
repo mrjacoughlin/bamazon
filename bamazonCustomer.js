@@ -99,3 +99,14 @@ function makePurchase(product, quantity) {
 }
 // This function allows the user to buy the desired quantity,
 // Then lets the user know if the purchase was successfull and updates the database.
+
+function checkInventory(choiceId, inventory) {
+  for (var i = 0; i < inventory.length; i++) {
+    if (inventory[i].item_id === choiceId) {
+      return inventory[i];
+    }
+  }
+  return null;
+}
+//This function will check to see if the product is within the inventory,
+// if found return Inventory
